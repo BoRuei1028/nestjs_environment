@@ -1,15 +1,15 @@
-# 開發環境建立
+# Swagger api文件建立
 
 ### 描述
-於本機端建立以 Nodejs + Nestjs 為主的後端開發環境
+開發環境中架設可用來說明 API 規格的說明文件
 
 ### 功能
 * 使用 4000 port 作為後端 server port
-* 於開發環境中實作 (get) helloworld API，搭配 Ngrok 可讓人遠端於網頁直接輸入上述 ngrok_url/helloworld 後顯示 hello world
+* 網頁上顯示 API 說明文件，內容包含說明 header/body/param/response
 
 ### Environment 環境建置
 1. Nest.js
-2. Ngrok
+2. Swagger
 
 ### 安裝執行
 1. 下載至本地端
@@ -24,5 +24,7 @@ cd nestjs_environment
 ```
 npm run start
 ```
-4. 進入以下網址
-https://e0b0-1-172-48-180.eu.ngrok.io/helloworld
+4. 進入文件網址
+http://localhost:4000/api/
+
+![](https://i.imgur.com/XIcsvLh.png)
