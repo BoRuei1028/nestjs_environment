@@ -62,7 +62,7 @@ export class AppController {
     },
   })
   get() {
-    return []
+    return 'Get http://localhost:4000/api/stocks/list'
   }
 
   @Get('')

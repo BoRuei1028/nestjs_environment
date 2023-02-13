@@ -1,0 +1,11 @@
+version: '1.0'
+
+services:
+  nest-docker:
+    image: nest-docker
+    build: .
+    ports:
+      - "8000:4000"
+    volumes:
+      - ./:/nestjs_environment/nestjs_environment
+
