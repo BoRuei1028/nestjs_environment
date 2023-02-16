@@ -9,8 +9,19 @@ services:
         published: 4000
         protocol: tcp 
     healthcheck:
-      test: curl -f http://localhost:4000 || exit 1
-      interval: 30s
-      timeout: 5s
-      retries: 3
+        test: ["CMD", "/usr/local/bin/healthcheck" ]
+        interval: 30s
+        timeout: 5s
+        retries: 3
+  redis:
+    image: redis
+    volumes:
+      - ./redis.conf:/usr/local/etc/redis/redis.conf
+    container_name: redis
+    command: redis-server /usr/local/etc/redis/redis.conf
+    ports:
+      - target: 6379
+        published: 6379
+        protocol: tcp
+
 
