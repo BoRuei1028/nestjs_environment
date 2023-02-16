@@ -171,12 +171,4 @@ export class AppController {
   createApp(@Body() data: CreateStockRecord) {
     return this.appService.createstockrecord(data)
   }
-
-
-
-  // @Get(':id')
-  // @ApiResponse({ status: 200, description: 'success' })
-  // getId(@Param('id') id: string) {
-  //   return this.appService.getDataById(id)
-  // }
 }

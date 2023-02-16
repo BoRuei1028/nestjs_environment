@@ -2,7 +2,6 @@ module.exports = {
   apps : [{
     name: 'api',
     script: './dist/main.js',
-    // script: './src/main.ts',
     watch: 'false',
     instances: 4,
     exec_mode: 'cluster',

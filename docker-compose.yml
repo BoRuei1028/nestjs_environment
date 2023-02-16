@@ -1,11 +1,16 @@
-version: '1.0'
+version: '3.8'
 
 services:
-  nest-docker:
-    image: nest-docker
+  nest-pm2-docker:
+    image: nest-pm2-docker
     build: .
     ports:
-      - "8000:4000"
-    volumes:
-      - ./:/nestjs_environment/nestjs_environment
+      - target: 4000
+        published: 4000
+        protocol: tcp 
+    healthcheck:
+      test: curl -f http://localhost:4000 || exit 1
+      interval: 30s
+      timeout: 5s
+      retries: 3
 
