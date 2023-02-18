@@ -13,15 +13,27 @@ services:
         interval: 30s
         timeout: 5s
         retries: 3
+    networks:
+      - myNetWork
+    depends_on:
+      - redis
   redis:
     image: redis
     volumes:
       - ./redis.conf:/usr/local/etc/redis/redis.conf
     container_name: redis
-    command: redis-server /usr/local/etc/redis/redis.conf
+    networks:
+      - myNetWork
+    command: /bin/sh -c "redis-server --requirepass $$REDIS_PASSWORD" 
     ports:
       - target: 6379
         published: 6379
         protocol: tcp
+    env_file:
+      - redis.env
+    hostname: redis
+networks:
+  myNetWork:
+    name: myNetWork
 
-
+# 不給名稱預設是nestjs_environment_default

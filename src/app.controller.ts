@@ -1,21 +1,44 @@
-import { Controller, Get, Param, Post, Body, Query } from '@nestjs/common';
+import { Controller, Get, Param, Post, Body, Query, Delete } from '@nestjs/common';
 import { AppService } from './app.service';
 import { ApiTags, SwaggerModule, DocumentBuilder, SwaggerCustomOptions, ApiHeader, ApiResponse, ApiBadRequestResponse, ApiBasicAuth, ApiSecurity, ApiOperation, ApiQuery, ApiOkResponse, getSchemaPath, ApiExtraModels } from '@nestjs/swagger';
 import { StockedDetailDto } from './StockedDetail.dto';
 import { CreateStockRecord } from './CreatedStockRecord.dto';
 import { StockedDto } from './StockedDto.dto';
+import { Redis } from 'ioredis'
+// import { Redis } from 'ioredis';
 
 
 // 添加標籤
-@ApiTags('Stock') //bootstrap() : addTag('User')
+@ApiTags('Stock')
 @ApiExtraModels(StockedDetailDto)
 @ApiExtraModels(StockedDto)
 @ApiBasicAuth()
-@Controller('api/stocks')
+@Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) { }
+  constructor(
+    private readonly appService: AppService,
+  ) {}
+    
+  
+  @Get('api/redis/get')
+  async getRedisKey() {
+    return this.appService.get()
+  }
 
-  @Get('/list')
+
+  @Post('api/redis/set')
+  async setRedisKey() {
+    return this.appService.set()
+  }
+
+  @Delete('api/redis/del')
+  async delRedisKey() {
+    return this.appService.del()
+  }
+
+
+
+  @Get('api/stocks/list')
   @ApiOperation({
     description: '取得可編輯入庫資料的工單清單'
   })
@@ -61,11 +84,11 @@ export class AppController {
       },
     },
   })
-  get() {
+  getData() {
     return 'Get http://localhost:4000/api/stocks/list'
   }
 
-  @Get('')
+  @Get('api/stocks')
   @ApiOperation({
     description: '取得單一可編輯入庫資料的工單資訊'
   })
@@ -115,7 +138,7 @@ export class AppController {
   }
 
 
-  @Post('')
+  @Post('api/stocks')
   @ApiOperation({
     description: '新增單一工單的入庫資訊'
   })
@@ -171,4 +194,9 @@ export class AppController {
   createApp(@Body() data: CreateStockRecord) {
     return this.appService.createstockrecord(data)
   }
+
 }
+
+
+
+
