@@ -1,15 +1,20 @@
-# 開發環境建立
+# 架設 Redis server
 
 ### 描述
-於本機端建立以 Nodejs + Nestjs 為主的後端開發環境
+於本機端透過 docker 架設 Redis server
 
 ### 功能
-* 使用 4000 port 作為後端 server port
-* 於開發環境中實作 (get) helloworld API，搭配 Ngrok 可讓人遠端於網頁直接輸入上述 ngrok_url/helloworld 後顯示 hello world
+* 於開發環境中實作可對 Redis server 進行 SET/GET/DELETE key 功能的 API
+* 需對 Redis server 進行帳號密碼設定
+* 透過 docker 部署驗收環境
 
 ### Environment 環境建置
 1. Nest.js
 2. Ngrok
+3. swagger
+4. docker 
+5. redis
+6. pm2
 
 ### 安裝執行
 1. 下載至本地端
@@ -20,9 +25,12 @@ git clone https://github.com/BoRuei1028/nestjs.environment.git
 ```
 cd nestjs_environment
 ```
-3. 開啟Server
+3. 建立images
 ```
-npm run start
+docker build -t nest-pm2-docker .
 ```
-4. 進入以下網址
-https://e0b0-1-172-48-180.eu.ngrok.io/helloworld
+4. 啟動開發環境(包含nestjs-pm2-docker 和 redis 兩個容器)
+```
+docker compose up -d
+```
+
