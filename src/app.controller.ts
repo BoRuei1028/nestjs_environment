@@ -1,11 +1,11 @@
-import { Controller, Get, Param, Post, Body, Query, Delete } from '@nestjs/common';
+import { Controller, Get, Param, Post, Body, Query, Delete, Put } from '@nestjs/common';
 import { AppService } from './app.service';
 import { ApiTags, SwaggerModule, DocumentBuilder, SwaggerCustomOptions, ApiHeader, ApiResponse, ApiBadRequestResponse, ApiBasicAuth, ApiSecurity, ApiOperation, ApiQuery, ApiOkResponse, getSchemaPath, ApiExtraModels } from '@nestjs/swagger';
 import { StockedDetailDto } from './StockedDetail.dto';
 import { CreateStockRecord } from './CreatedStockRecord.dto';
 import { StockedDto } from './StockedDto.dto';
 import { Redis } from 'ioredis'
-// import { Redis } from 'ioredis';
+
 
 
 // 添加標籤
@@ -18,8 +18,28 @@ export class AppController {
   constructor(
     private readonly appService: AppService,
   ) {}
-    
-  
+
+  @Post('api/redis/treasureValue')
+  async setTreasureValue() {
+    return this.appService.setTreasureValue()
+  }
+
+  @Get('api/redis/treasureValue')
+  async getTreasureValue() {
+    return this.appService.getTreasureValue()
+  }
+
+  @Put('api/redis/treasureValue')
+  async modifyTreasureValue() {
+    return this.appService.plusOneTreasureValue()
+  }
+  //不是必須
+  // @Delete('api/redis/treasureValue')
+  // async delTreasureValue() {
+  //   return this.appService.delTreasureValue()
+  // }
+
+
   @Get('api/redis/get')
   async getRedisKey() {
     return this.appService.get()
