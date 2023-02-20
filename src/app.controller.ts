@@ -19,16 +19,6 @@ export class AppController {
     private readonly appService: AppService,
   ) {}
 
-  @Post('api/redis/treasureValue')
-  async setTreasureValue() {
-    return this.appService.setTreasureValue()
-  }
-
-  @Get('api/redis/treasureValue')
-  async getTreasureValue() {
-    return this.appService.getTreasureValue()
-  }
-
   @Put('api/redis/treasureValue')
   async modifyTreasureValue() {
     return this.appService.plusOneTreasureValue()

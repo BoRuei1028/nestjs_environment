@@ -24,19 +24,17 @@ export class AppService {
   }
 
   async plusOneTreasureValue() {
-    const lockCondition =  await this.redis.set('lock', 'true', 'EX', 10, 'NX')
+    const lockCondition =  await this.redis.set('lock', 10, 'EX', 10, 'NX')
     if (!lockCondition) { //null 鎖住 => denied request
-      return `treasure: ${treasure} locked` 
-    
-    } else { //OK 沒鎖住 => set Lock => do something => release Lock
-        let treasure = await this.redis.get('treasure')
-        const treasureValue = Number(treasure) + 1
-        await this.redis.set('treasure', `${treasureValue}`)
-        await this.redis.del('lock')
-        return `treasure: ${treasureValue} unlocked`
-    }
+      return 'locked'
+    }  //OK 沒鎖住 => set Lock => do something => release Lock
+    const treasure = await this.redis.get('treasure')
+    const treasureValue = Number(treasure) + 1
+    await this.redis.set('treasure', `${treasureValue}`)
+    await this.redis.del('lock')
+    return `treasure: ${treasureValue}`
   }
-
+  
   /*
   不是去判斷treasure是否被鎖住，treasure也不需要設定鎖和時效
   */
