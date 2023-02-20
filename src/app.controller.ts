@@ -33,11 +33,6 @@ export class AppController {
   async modifyTreasureValue() {
     return this.appService.plusOneTreasureValue()
   }
-  //不是必須
-  // @Delete('api/redis/treasureValue')
-  // async delTreasureValue() {
-  //   return this.appService.delTreasureValue()
-  // }
 
 
   @Get('api/redis/get')
