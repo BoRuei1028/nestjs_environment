@@ -18,6 +18,11 @@ export class AppController {
   constructor(
     private readonly appService: AppService,
   ) {}
+  
+  @Post('api/redis/treasureValue')
+  async setTreasureValue() {
+    return this.appService.setTreasureValue()
+  }
 
   @Put('api/redis/treasureValue')
   async modifyTreasureValue() {

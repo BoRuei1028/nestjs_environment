@@ -4,8 +4,6 @@ import { CreateStockRecord } from './CreatedStockRecord.dto';
 import { RedisService } from '@liaoliaots/nestjs-redis';
 
 
-let treasure = 100
-
 @Injectable()
 export class AppService {
   
@@ -15,12 +13,7 @@ export class AppService {
     }
 
   async setTreasureValue() {
-    await this.redis.set('treasure', `${treasure}`, 'EX', 10, 'NX')
-  }
-
-  async getTreasureValue() {
-    const value = await this.redis.get('treasure')
-     return `treasure: ${value}`
+    await this.redis.set('treasure',  100)
   }
 
   async plusOneTreasureValue() {
