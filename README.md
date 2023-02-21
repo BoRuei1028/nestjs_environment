@@ -1,28 +1,19 @@
-# 開發環境建立
+# 開發環境搭配 Redis 建立互斥鎖的存取機制
 
-### 描述
-於本機端建立以 Nodejs + Nestjs 為主的後端開發環境
+[描述]
+透過 Redis SET NX 來建立互斥鎖，以避免資料的 race condition
 
-### 功能
-* 使用 4000 port 作為後端 server port
-* 於開發環境中實作 (get) helloworld API，搭配 Ngrok 可讓人遠端於網頁直接輸入上述 ngrok_url/helloworld 後顯示 hello world
+[驗收方式]
+1. 於 Redis 中先建立 ```{"treasure": 100}```。
+2. 寫一隻可用來改變 treasure 的 api (假設行為是 value += 1)
+3. 連續呼叫 api
+4. treasure 在十秒內只能被改變一次
 
-### Environment 環境建置
-1. Nest.js
-2. Ngrok
-
-### 安裝執行
-1. 下載至本地端
+#### 關於redis sentx 指令
+```!
+const lockCondition =  await this.redis.set('lock', 'true', 'EX', 10, 'NX')
 ```
-git clone https://github.com/BoRuei1028/nestjs.environment.git
-```
-2. 開啟終端機，指定資料夾位置
-```
-cd nestjs_environment
-```
-3. 開啟Server
-```
-npm run start
-```
-4. 進入以下網址
-https://e0b0-1-172-48-180.eu.ngrok.io/helloworld
+* key命名為lock，值為隨機值 
+* EX 設key的時效/單位為秒
+* NX: `SET if Not eXists` 命令在指定的 key 不存在时，為 key 设置指定的值。
+* lockCondition 的值有兩種: 'OK' or 'null'
