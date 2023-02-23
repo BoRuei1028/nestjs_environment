@@ -32,6 +32,18 @@ services:
     env_file:
       - redis.env
     hostname: redis
+  mariadb:
+    image: mariadb
+    container_name: "mariadb"
+    ports:
+      - target: 3306
+        published: 3306
+        protocol: tcp
+    env_file:
+      - mariadb.env
+    volumes:
+      - ./db/data:/var/lib/mysql
+      - ./db/initdb.d:/docker-entrypoint-initdb.d
 networks:
   myNetWork:
     name: myNetWork
