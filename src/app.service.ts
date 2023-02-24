@@ -2,20 +2,45 @@ import Redis from 'ioredis';
 import { Injectable } from '@nestjs/common';
 import { CreateStockRecord } from './CreatedStockRecord.dto';
 import { RedisService } from '@liaoliaots/nestjs-redis';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Fruit } from './entity/fruit.entity';
+import { Repository } from 'typeorm';
+import { CreateFruitDto } from './CreateFruit.dto';
 
 
 @Injectable()
 export class AppService {
   
   private readonly redis: Redis
-  constructor(private readonly redisService: RedisService) {
+  constructor(
+
+    @InjectRepository(Fruit)
+    private fruitRepository: Repository<Fruit>,
+
+    private readonly redisService: RedisService,
+
+    ) {
       this.redis = this.redisService.getClient()
     }
+
+  async insertFruitData(data: CreateFruitDto) {
+    await this.fruitRepository.insert(data)
+  }
+
+  async updateFruitData(id, data: CreateFruitDto) {
+
+    await this.fruitRepository.update(id, data)
+  }
+
+  async deleteFruitData(id) {
+
+     await this.fruitRepository.delete(id)
+  }
+
 
   async setTreasureValue() {
     await this.redis.set('treasure',  100)
   }
-
   async plusOneTreasureValue() {
     const lockCondition =  await this.redis.set('lock', 10, 'EX', 10, 'NX')
     if (!lockCondition) { //null 鎖住 => denied request

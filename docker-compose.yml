@@ -35,6 +35,7 @@ services:
   mariadb:
     image: mariadb
     container_name: "mariadb"
+    hostname: mariadb
     ports:
       - target: 3306
         published: 3306
@@ -44,6 +45,8 @@ services:
     volumes:
       - ./db/data:/var/lib/mysql
       - ./db/initdb.d:/docker-entrypoint-initdb.d
+    networks:
+      - myNetWork
 networks:
   myNetWork:
     name: myNetWork

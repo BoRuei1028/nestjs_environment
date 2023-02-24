@@ -4,7 +4,8 @@ import { ApiTags, SwaggerModule, DocumentBuilder, SwaggerCustomOptions, ApiHeade
 import { StockedDetailDto } from './StockedDetail.dto';
 import { CreateStockRecord } from './CreatedStockRecord.dto';
 import { StockedDto } from './StockedDto.dto';
-import { Redis } from 'ioredis'
+// import { Redis } from 'ioredis'
+import { CreateFruitDto } from './CreateFruit.dto';
 
 
 
@@ -12,12 +13,30 @@ import { Redis } from 'ioredis'
 @ApiTags('Stock')
 @ApiExtraModels(StockedDetailDto)
 @ApiExtraModels(StockedDto)
+// @ApiExtraModels(CreateFruitDto)
 @ApiBasicAuth()
 @Controller()
 export class AppController {
   constructor(
     private readonly appService: AppService,
   ) {}
+
+  //insert
+  @Post('api/fruitData')
+  insertFruitData(@Body() data: CreateFruitDto )  {
+    this.appService.insertFruitData(data)
+    return {...data}
+  } 
+  //update
+  @Put('api/fruitData/:id')
+  updateFruitData(@Param('id') id, @Body() createFruitDto : CreateFruitDto) {
+    return this.appService.updateFruitData(id, createFruitDto)
+  }
+  //delete
+  @Delete('api/fruitData/:id')
+  deleteFruitData(@Param('id') id) {
+    return this.appService.deleteFruitData(id)
+  }
   
   @Post('api/redis/treasureValue')
   async setTreasureValue() {
