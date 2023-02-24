@@ -20,6 +20,15 @@ export class AppController {
   constructor(
     private readonly appService: AppService,
   ) {}
+  
+  
+  @Get('api/searchData')
+  async findData() {
+    return await this.appService.findData()
+  }
+  
+  
+
 
   //insert
   @Post('api/fruitData')
