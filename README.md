@@ -34,9 +34,12 @@ export class Fruit {
 
 }
 ```
+
 ![](https://i.imgur.com/x2VEn7D.png)
+
 ### 可用 TypeORM 對 Mariadb SQL server 進行連線
 host: 'localhost' => Error
+
 ![](https://i.imgur.com/80mc94E.png)
 
 #### 可行
@@ -86,9 +89,11 @@ mariadb:
     await this.fruitRepository.insert(data)
   }
 ```
+
 ![](https://i.imgur.com/3y6An8K.png)
 
 新增成功
+
 ![](https://i.imgur.com/bwqeCcU.png)
 
 
@@ -126,10 +131,15 @@ export class CreateFruitDto {
 ```
 
 目前資料表中的三筆資料
+
 ![](https://i.imgur.com/0hA0MAn.png)
+
 指定變更id: 3 的資料
+
 ![](https://i.imgur.com/TUmA8Nj.png)
+
 成功變更
+
 ![](https://i.imgur.com/7Lqw5Ii.png)
 
 
@@ -151,7 +161,9 @@ export class CreateFruitDto {
   }
 ```
 ![](https://i.imgur.com/MFqg5tv.png)
+
 成功刪除
+
 ![](https://i.imgur.com/WARkApC.png)
 
 
