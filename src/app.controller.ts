@@ -11,9 +11,6 @@ import { CreateFruitDto } from './CreateFruit.dto';
 
 // 添加標籤
 @ApiTags('Stock')
-@ApiExtraModels(StockedDetailDto)
-@ApiExtraModels(StockedDto)
-// @ApiExtraModels(CreateFruitDto)
 @ApiBasicAuth()
 @Controller()
 export class AppController {
@@ -22,14 +19,11 @@ export class AppController {
   ) {}
   
   
-  @Get('api/searchData')
+  @Get('api/findData')
   async findData() {
     return await this.appService.findData()
   }
   
-  
-
-
   //insert
   @Post('api/fruitData')
   insertFruitData(@Body() data: CreateFruitDto )  {
@@ -73,7 +67,6 @@ export class AppController {
   async delRedisKey() {
     return this.appService.del()
   }
-
 
 
   @Get('api/stocks/list')

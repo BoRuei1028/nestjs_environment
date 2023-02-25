@@ -6,7 +6,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Fruit } from './entity/fruit.entity';
 import { Repository } from 'typeorm';
 import { CreateFruitDto } from './CreateFruit.dto';
-import { async } from 'rxjs';
 
 
 @Injectable()
@@ -32,23 +31,12 @@ export class AppService {
           name: 'apple'
       })
       await this.redis.set('apple', JSON.stringify(fruit), 'EX', 3)
-      return `cache missing ${[...fruit]}`
+      return `cache missing ${JSON.stringify(fruit)}`
     }
-    return `cache hit ${dataFromRedis}`
-  
-    // if (data) {
-    //   return `cache hit. ${id}: ${data}`
-    // }
-    // const result = await this.fruitRepository.findOne(id);
-    // await this.redis.set('cache_data', JSON.stringify(result), 'EX', 3)
-    // return `cache missing. ${id}: ${result}`
+    return `cache hit ${dataFromRedis}` 
 
   }
 
-  // async searchData(id) {
-  //   //IF redis 沒有該筆資料
-  //   const condition = await this.redis.get('cache_data')
-  // }
 
 
   async insertFruitData(data: CreateFruitDto) {
